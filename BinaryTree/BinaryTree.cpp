@@ -586,7 +586,7 @@ int BinaryTree<T>::level(BinaryTree<T> *p, int n){
 }
 
 template<class T>
-bool BinaryTree<T>::isbalance(int &h, bool &balance){
+bool BinaryTree<T>::isbalance(int &h){
     bool lb = true, rb = true;
     int lh = 0, rh = 0;
     if(this==NULL){
@@ -598,16 +598,15 @@ bool BinaryTree<T>::isbalance(int &h, bool &balance){
         return true;
     }
     if(this->lchild!=NULL)
-        this->lchild->isbalance(lh, lb);
+        lb = this->lchild->isbalance(lh);
     if(this->rchild!=NULL)
-        this->rchild->isbalance(rh, rb);
+        rb = this->rchild->isbalance(rh);
     if(!lb||!rb)
-        balance = false;
+        return false;
     else{
         h = (lh > rh ? lh : rh) + 1;
-        balance = abs(lh - rh) > 1 ? false : true;
+        return abs(lh - rh) > 1 ? false : true;
     }
-    return balance;
 }
 
 template<class T>
@@ -837,4 +836,70 @@ void ThreadTree<T>::postThread(ThreadTree<T> *&pre){
         }
         pre = this;
     }
+}
+
+template<class T>
+Tree<T>::Tree(BinaryTree<T> *tr){
+    data = tr->data;
+    firstchild = tr->lchild != NULL ? new Tree(tr->lchild) : NULL;
+    nextsibling = tr->rchild != NULL ? new Tree(tr->rchild) : NULL;
+}
+
+template<class T>
+int Tree<T>::depth(){
+    if(this==NULL)
+        return 0;
+    int l = firstchild->depth() + 1;
+    int r = nextsibling->depth();
+    return l > r ? l : r;
+}
+
+template<class T>
+struct Queue{
+    Tree<T>* tr;
+    int degrade;
+};
+
+template<class T>
+Tree<T> *level_grade_build(T level[], int grade[], int n){
+    Queue<T> Q[maxsize];
+    int i = -1, rear = -1, front = -1;
+    Tree<T> *root = new Tree<T>(level[++i]);
+    //root->firstchild = root->nextsibling = NULL;
+    Tree<T> *p = root;
+    Q[++rear].tr = p;
+    Q[rear].degrade = grade[i];
+    while(i<n){
+        p = Q[++front].tr;
+        cout << p->data;
+        int d = Q[front].degrade;
+        if(d>0){
+            Tree<T> *r = new Tree<T>(level[++i]);
+            p->firstchild = r;
+            p = r;
+            Q[++rear].tr = r;
+            Q[rear].degrade = grade[i];
+            d--;
+            for (int j = 1; j <= d; j++){
+                r = new Tree<T>(level[++i]);
+                p->nextsibling = r;
+                p = r;
+                Q[++rear].tr = r;
+                Q[rear].degrade = grade[i];
+            }
+        }
+    }
+    return root;
+}
+
+template <class T>
+bool Tree<T>::isSame(Tree<T> *tr){
+    if(this==NULL&&tr==NULL)
+        return true;
+    else if((this==NULL&&tr!=NULL)||(this!=NULL&&tr==NULL))
+        return false;
+    else if(this->data!=tr->data)
+        return false;
+    else
+        return this->firstchild->isSame(tr->firstchild) && this->nextsibling->isSame(tr->nextsibling);
 }

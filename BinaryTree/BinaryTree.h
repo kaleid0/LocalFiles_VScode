@@ -7,7 +7,7 @@
 
 using namespace std;
 
-int maxsize = 100;
+const int maxsize = 100;
 
 template<class T>
 class BinaryTree{
@@ -59,7 +59,7 @@ public:
     BinaryTree<T> *linkLeaf();
     bool isSame(BinaryTree<T> *tr);
     int level(BinaryTree<T> *p, int n = 1); //所在层次
-    bool isbalance(int &h, bool &balance);
+    bool isbalance(int &h);
     virtual void Insert(int x);
     void lastgen();
 };
@@ -100,6 +100,7 @@ public:
     void showk(int k);//由大到小输出BST大于等于K的节点
 };
 
+
 template<class T>
 class ThreadTree{
 public:
@@ -130,6 +131,28 @@ public:
     void postThread(ThreadTree<T> *&pre);
 };
 
+
+template<class T>
+class Tree{
+public:
+    T data;
+    Tree *firstchild, *nextsibling;
+
+    Tree(){
+        this->data = 0;
+        firstchild = nextsibling = NULL;
+    }
+    Tree(T r){
+        this->data = r;
+        firstchild = nextsibling = NULL;
+    }
+
+    Tree(BinaryTree<T> *tr);
+
+    int depth();
+    friend Tree<T> *level_grade_build(T level[], int grade[], int n);
+    bool isSame(Tree<T> *tr);
+};
 // template<class T>
 // class ThreadBinaryTree:public BinaryTree<T>{
 // public:
