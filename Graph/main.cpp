@@ -61,7 +61,9 @@ int main(){
     bool i4 = isCircle(G4);
 
     printpath(G1, 'A', 'G');
-    printpath(G2, 'A', 'G');
+    printpath(G5, 'A', 'G');
+
+    component(G1);
 
     bool b1 = G1.Adjacent('A', 'B');
     bool b2 = G1.Adjacent('A', 'D');

@@ -7,8 +7,9 @@
             "args": [
                 "-g",
                 //"main.cpp",
-                "C:\\CPP\\BinaryTree\\main.cpp",
-                //"C:\\CPP\\Graph\\main.cpp",
+                //"C:\\CPP\\BinaryTree\\main.cpp",
+                "C:\\CPP\\Graph\\main.cpp",
+                //"C:\\CPP\\menu\\main.cpp",
                 "-o",
                 "${fileDirname}\\main.exe"
             ],

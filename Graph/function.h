@@ -19,12 +19,12 @@ bool pathBFS(const Graph &G, int a, int b);
 bool BFSp(const Graph &G, int a, int b, bool visited[]);
 bool pathDFS(const Graph &G, char a, char b);
 bool pathBFS(const Graph &G, char a, char b);
-void printpath(const MGraph &G, char a, char b);
-void printpath(const MGraph &G, int a, int b);
-void DFSprint(const MGraph &G, int a, int b, int d, int path[], bool visited[]);
-void printpath(const AlGraph &G, char a, char b);
-void printpath(const AlGraph &G, int a, int b);
-void DFSprint(const AlGraph &G, int a, int b, int d, int path[], bool visited[]);
+// void printpath(const MGraph &G, char a, char b);
+// void printpath(const MGraph &G, int a, int b);
+// void DFSprint(const MGraph &G, int a, int b, int d, int path[], bool visited[]);
+void printpath(const Graph &G, char a, char b);
+void printpath(const Graph &G, int a, int b);
+void DFSprint(const Graph &G, int a, int b, int d, int path[], bool visited[]);
 void toposort(const DMGraph &G);
 void component(const Graph &G);//连通分量
 void DFS_c(const Graph &G, int k, int A[], int &n, bool visited[]);
@@ -212,66 +212,64 @@ bool pathBFS(const Graph &G, char a, char b){
     return pathBFS(G, u, v);
 }
 
-void printpath(const MGraph &G, char a, char b){
+// void printpath(const MGraph &G, char a, char b){
+//     int u = G.cEdge(a), v = G.cEdge(b);
+//     printpath(G, u, v);
+// }
+
+// void printpath(const MGraph &G, int a, int b){
+//     bool visited[MaxVertexNum];
+//     for (int i = 0; i < G.getvnum(); i++)
+//         visited[i] = false;
+//     int path[MaxVertexNum];
+//     DFSprint(G, a, b, 0, path, visited);
+//     cout << endl;
+// }
+
+// void DFSprint(const MGraph &G, int a, int b, int d, int path[], bool visited[]){
+//     path[d] = a;
+//     visited[a] = true;
+//     if(a==b){
+//         for (int i = 0; i <= d; i++)
+//             cout << G.vex[path[i]];
+//         cout << endl;
+//     }
+//     int i = G.FirstNeighbor(a);
+//     while(i!=-1){
+//         if(!visited[i]){
+//             visited[i] = true;
+//             DFSprint(G, i, b, d + 1, path, visited);
+//         }
+//         i = G.NextNeighbor(a, i);
+//     }
+//     visited[a] = false;
+// }
+
+void printpath(const Graph &G, char a, char b){
     int u = G.cEdge(a), v = G.cEdge(b);
     printpath(G, u, v);
 }
 
-void printpath(const MGraph &G, int a, int b){
+void printpath(const Graph &G, int a, int b){
     bool visited[MaxVertexNum];
     for (int i = 0; i < G.getvnum(); i++)
         visited[i] = false;
     int path[MaxVertexNum];
     DFSprint(G, a, b, 0, path, visited);
+    cout << endl;
 }
 
-void DFSprint(const MGraph &G, int a, int b, int d, int path[], bool visited[]){
+void DFSprint(const Graph &G, int a, int b, int d, int path[], bool visited[]){
     path[d] = a;
     visited[a] = true;
     if(a==b){
         for (int i = 0; i <= d; i++)
-            cout << G.vex[path[i]];
+            G.visit(path[i]);
         cout << endl;
     }
-    int i = G.FirstNeighbor(a);
-    while(i!=-1){
-        if(!visited[i]){
-            visited[i] = true;
-            DFSprint(G, i, b, d + 1, path, visited);
-        }
-        i = G.NextNeighbor(a, i);
-    }
-    visited[a] = false;
-}
-
-void printpath(const AlGraph &G, char a, char b){
-    int u = G.cEdge(a), v = G.cEdge(b);
-    printpath(G, u, v);
-}
-
-void printpath(const AlGraph &G, int a, int b){
-    bool visited[MaxVertexNum];
-    for (int i = 0; i < G.getvnum(); i++)
-        visited[i] = false;
-    int path[MaxVertexNum];
-    DFSprint(G, a, b, 0, path, visited);
-}
-
-void DFSprint(const AlGraph &G, int a, int b, int d, int path[], bool visited[]){
-    path[d] = a;
-    visited[a] = true;
-    if(a==b){
-        for (int i = 0; i <= d; i++)
-            G.visit(i);
-        cout << endl;
-    }
-    int i = G.FirstNeighbor(a);
-    while(i!=-1){
-        if(!visited[i]){
-            visited[i] = true;
-            DFSprint(G, i, b, d + 1, path, visited);
-        }
-        i = G.NextNeighbor(a, i);
+    for (int w = G.FirstNeighbor(a); w >= 0; w = G.NextNeighbor(a, w)){
+        if(!visited[w])
+            DFSprint(G, w, b, d + 1, path, visited);
     }
     visited[a] = false;
 }
@@ -360,7 +358,6 @@ bool topoCircle(const Graph &G, int indegree[]){
         }
     }
     for (int i = 0; i < G.getvnum(); i++){
-        cout << indegree[i]<<i;
         if(indegree[i]>0)
             return true;
     }
