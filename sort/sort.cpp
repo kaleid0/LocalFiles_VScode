@@ -1,3 +1,4 @@
+#pragma once
 #include<iostream>
 #include<time.h>
 #include"sort.h"
@@ -71,12 +72,17 @@ void bubblesort2(int A[],int n){
                 swap(A[i], A[i + 1]);
                 flag = true;
             }
+        if(!flag)
+            return;
         high--;
+        flag = false;
         for (int i = high; i > low; i--)
             if(A[i]<A[i-1]){
                 swap(A[i], A[i - 1]);
                 flag = true;
             }
+        if(!flag)
+            return;
         low++;
     }
 }
@@ -194,3 +200,32 @@ void heapsort(int A[],int n){
     }
 }
 
+void mergesort(int A[], int n){
+    cout << __FUNCTION__ << ':' << endl;
+    mergesort(A, 0, n - 1);
+}
+
+void mergesort(int A[], int low, int high){
+    if(low<high){
+        int mid = (low + high) / 2;
+        mergesort(A, low, mid);
+        mergesort(A, mid + 1, high);
+        merge(A, low, mid, high);
+        
+    }
+}
+
+void merge(int A[], int low, int mid, int high){
+    int B[num];
+    for (int i = low; i <= mid; i++)
+        B[i] = A[i];
+    int i = mid + 1, j = low, k = low;
+    for (; i <= high && j <= mid; k++){
+        if(A[i]<B[j])
+            A[k] = A[i++];
+        else
+            A[k] = B[j++];
+    }
+    while(j<=mid)
+        A[k++] = B[j++];
+}
