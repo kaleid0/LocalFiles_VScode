@@ -10,12 +10,9 @@
                 //"C:\\CPP\\BinaryTree\\main.cpp",
                 //"C:\\CPP\\Graph\\main.cpp",
                 //"C:\\CPP\\menu\\main.cpp",
-<<<<<<< HEAD
                 //"C:\\CPP\\sort\\main.cpp",
                 "C:\\CPP\\iostream\\1.cpp",
-=======
-                "C:\\CPP\\sort\\main.cpp",
->>>>>>> 8dcb53244467235b84155ef47c2eb236035b450a
+                //"C:\\CPP\\sort\\main.cpp",
                 "-o",
                 "${fileDirname}\\main.exe"
             ],
