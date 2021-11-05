@@ -11,7 +11,7 @@
                 //"C:\\CPP\\Graph\\main.cpp",
                 //"C:\\CPP\\menu\\main.cpp",
                 //"C:\\CPP\\sort\\main.cpp",
-                "C:\\CPP\\integration\\main.cpp",
+                "C:\\CPP\\iostream\\1.cpp",
                 "-o",
                 "${fileDirname}\\main.exe"
             ],
