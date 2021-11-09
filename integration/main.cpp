@@ -1,7 +1,7 @@
 #include<iostream>
 #include<cmath>
-#include"function.h"
-#include"integration.h"
+#include"function.h"//被积函数
+#include"integration.h"//等步长划分积分
 
 using namespace std;
 

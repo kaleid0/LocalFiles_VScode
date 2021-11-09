@@ -3,6 +3,8 @@
 
 using namespace std;
 
+//最长相匹配字符串,"a1b1c1d","abcd",最长是"abcd"
+//动态规划
 int match(char *a, char *b){
     int lena = strlen(a);
     int lenb = strlen(b);
@@ -27,6 +29,8 @@ int match(char *a, char *b){
     return T[lena][lenb];
 }
 
+//最长连续匹配的字符串,"26abcd87","abcd",最长是"abcd"
+//穷举
 int match2(char *a, char *b){
     int lena = strlen(a), lenb = strlen(b);
     int max = 0, n;

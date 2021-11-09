@@ -4,33 +4,40 @@
 #include"Graph.h"
 #include"Graph.cpp"
 
+//邻接表到邻接矩阵
 MGraph AltoM(const AlGraph &A);
+//DFS
 void DFStraverse(const Graph &G);
 void DFS(const Graph &G, int i, bool visited[]);
+//BFS
 void BFStraverse(const Graph &G);
 void BFS(const Graph &G, int i, bool visited[]);
+//是不是树
 bool isTree(const Graph &G);
 void DFStree(const Graph &G, int i, int &vnum, int &edgenum, bool visited[]);
-void DFStraverse2(const Graph &G);//非递归
+//非递归DFS
+void DFStraverse2(const Graph &G);
 void DFS2(const Graph &G, int i, bool visited[]);
+//a到b的路径
 bool pathDFS(const Graph &G, int a, int b);
 bool DFSp(const Graph &G, int a, int b, bool visited[]);
 bool pathBFS(const Graph &G, int a, int b);
 bool BFSp(const Graph &G, int a, int b, bool visited[]);
 bool pathDFS(const Graph &G, char a, char b);
 bool pathBFS(const Graph &G, char a, char b);
-// void printpath(const MGraph &G, char a, char b);
-// void printpath(const MGraph &G, int a, int b);
-// void DFSprint(const MGraph &G, int a, int b, int d, int path[], bool visited[]);
 void printpath(const Graph &G, char a, char b);
 void printpath(const Graph &G, int a, int b);
 void DFSprint(const Graph &G, int a, int b, int d, int path[], bool visited[]);
+//拓扑排序
 void toposort(const DMGraph &G);
-void component(const Graph &G);//连通分量
+//输出连通分量
+void component(const Graph &G);
 void DFS_c(const Graph &G, int k, int A[], int &n, bool visited[]);
+//有无环
 bool isCircle(const MGraph &G);
 bool isCircle(const AlGraph &G);
 bool topoCircle(const Graph &G, int indegree[]);
+//求入度
 void indegree(const MGraph &G, int A[]);
 void indegree(const AlGraph &G, int A[]);
 

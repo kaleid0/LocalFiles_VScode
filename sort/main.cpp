@@ -6,25 +6,23 @@
 using namespace std;
 
 
-//const int num = 50000;
 
 
 int main(){
     void (*fun[10])(int A[], int n);
     fun[0] = bubblesort;
-    fun[1] = bubblesort2;
+    fun[1] = bubblesort2;//一次从前往后,一次从后往前交替,冒泡
     fun[2] = insertsort;
-    fun[3] = insertsort2;
+    fun[3] = insertsort2;//二分法查找插入位置
     fun[4] = shellsort;
     fun[5] = quicksort;
     fun[6] = selectsort;
     fun[7] = heapsort;
     fun[8] = mergesort;
 
+    /*test*/
     // int A[12] = {7, 5, 12, 3, 2, 1, 6, 11, 10, 4, 8, 9};
-
     // mergesort(A, 12);
-
     // for (int i = 0; i < 12; i++)
     //     cout << A[i] << ',';
 

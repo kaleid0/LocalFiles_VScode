@@ -88,15 +88,8 @@ public:
     DMGraph(const DMGraph &MG);
 
     virtual void InsertEdge(char a, char b, int weight);
-    //virtual bool Adjacent(char a, char b) const;
-    //virtual void Neighbors(char x) const;
     virtual void DeleteVertex(char x);
     virtual void DeleteEdge(char a, char b);
-    //virtual int FirstNeighbor(char a) const;
-    //virtual int FirstNeighbor(int i) const;
-    //virtual int NextNeighbor(char a, char b) const;
-    //virtual int NextNeighbor(int a, int b) const;
-    //virtual int GetEdgeValue(char a, char b) const;
     virtual void SetEdgeValue(char a, char b, int weight);
 };
 
@@ -172,21 +165,9 @@ public:
         edgenum = 0;
     }
     DAlGraph(const DMGraph &MG);
-    // virtual int cEdge(char a) const;
-    // virtual int getvnum() const { return vexnum; }
-    // virtual int getenum() const { return edgenum; }
-    // virtual void visit(int i) const { cout << adjlist[i].name; }
 
     virtual void InsertEdge(char a, char b, int weight);
-    //virtual void InsertVertex(char a);
-    //virtual bool Adjacent(char a, char b) const;
-    //virtual void Neighbors(char x) const;
     virtual void DeleteVertex(char x);
     virtual void DeleteEdge(char a, char b);
-    // virtual int FirstNeighbor(char a) const;
-    // virtual int FirstNeighbor(int i) const;
-    // virtual int NextNeighbor(char a, char b) const;
-    // virtual int NextNeighbor(int a, int b) const;
-    // virtual int GetEdgeValue(char a, char b) const;
     virtual void SetEdgeValue(char a, char b, int weight);
 };
