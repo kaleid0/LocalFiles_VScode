@@ -1,5 +1,0 @@
-C:/CPP/build/CMakeFiles/cmake_BinaryTree.dir
-C:/CPP/build/CMakeFiles/package.dir
-C:/CPP/build/CMakeFiles/package_source.dir
-C:/CPP/build/CMakeFiles/edit_cache.dir
-C:/CPP/build/CMakeFiles/rebuild_cache.dir

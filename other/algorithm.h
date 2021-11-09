@@ -1,15 +1,20 @@
 #include<iostream>
 #include<vector>
+#include<stack>
+#include<queue>
 
 using namespace std;
-int findmidnum(int a[], int b[], int n);
+
+//三个有序数组找差值最小的三元组
 vector<int> minthree(int a[], int b[], int c[], int l, int m, int n);
-int main(int argc,char* argv[]){
-    for (int i = 0; i < argc;i++){
-        cout << argv[i] << endl;
-    }
-        return 0; 
-}
+//两个有序数组的中位数
+int findmidnum(int a[], int b[], int n);
+//荷兰国旗问题,数组只有三种元素,进行排序;
+inline void swap(int &a, int &b);
+void sort(int A[], int n);
+
+
+
 
 vector<int> minthree(int a[],int b[],int c[],int l,int m,int n){
     int i=0,j=0,k=0;
@@ -68,3 +73,54 @@ int findmidnum(int a[],int b[],int n){
     }
     return a[s1] < b[s2] ? a[s1] : b[s2];
 }
+
+inline void swap(int &a,int &b){
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+void sort(int A[],int n){
+    int begin = 0, end = n - 1, i = 0;
+    while(i<end){
+        if(A[i]==2){
+            int temp = A[i];
+            A[i] = A[end];
+            A[end] = temp;
+            end--;
+        }
+        else if(A[i]==1){
+            i++;
+        }
+        else{
+            if(i!=begin){
+                int temp=A[i];
+                A[i] = A[begin];
+                A[begin] = temp;
+            }
+            i++;
+            begin++;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

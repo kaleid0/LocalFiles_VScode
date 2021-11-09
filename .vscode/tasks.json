@@ -7,12 +7,13 @@
             "args": [
                 "-g",
                 //"main.cpp",
-                //"C:\\CPP\\BinaryTree\\main.cpp",
+                "C:\\CPP\\BinaryTree\\main.cpp",
                 //"C:\\CPP\\Graph\\main.cpp",
                 //"C:\\CPP\\menu\\main.cpp",
                 //"C:\\CPP\\sort\\main.cpp",
-                "C:\\CPP\\iostream\\5.cpp",
+                //"C:\\CPP\\iostream\\6.cpp",
                 //"C:\\CPP\\sort\\main.cpp",
+                //"C:\\CPP\\string\\main.cpp",
                 "-o",
                 "${fileDirname}\\main.exe"
             ],

@@ -745,6 +745,23 @@ void BinaryTree<T>::lastgen(){
 }
 
 template<class T>
+void BinaryTree<T>::printbalance(int &h, bool &balance){
+    if(this==NULL){
+        h = 0;
+        balance = true;
+        return;
+    }
+    int lh, rh;
+    bool lb, rb;
+    this->lchild->printbalance(lh, lb);
+    this->rchild->printbalance(rh, rb);
+    h = (lh > rh ? lh : rh) + 1;
+    balance = abs(lh - rh) > 1 ? false : true;
+    if(balance)
+        cout << this->data << ',';
+}
+
+template<class T>
 ThreadTree<T>::ThreadTree(BinaryTree<T> *tr){
     data = tr->data;
     lchild = tr->lchild != NULL ? new ThreadTree(tr->lchild) : NULL;

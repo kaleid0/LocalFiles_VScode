@@ -10,6 +10,16 @@ using namespace std;
 const int maxsize = 100;
 
 template<class T>
+class Tree;//二叉链表存储树
+template <class T>
+class BinaryTree;//二叉树
+template <class T>
+class HFMtree;//哈夫曼树
+class BinarySearchTree;//二叉搜索树,二叉排序树
+template <class T>
+class ThreadTree;//线索二叉树
+
+template<class T>
 class BinaryTree{
 public:
     T data;
@@ -42,7 +52,7 @@ public:
     void PostOrder(T *A);
     void levelOrder(T *A);
     friend BinaryTree<T> *treetoBinarytree(T level[], int grade[], int k);//树的层序和度构造二叉树
-    void disp(int deep);
+    void disp(int deep);//输出树存储的表达式
     BinaryTree<T> *findk(BinaryTree<int> t, int k);//找到第K小的元素
     int WPL(int k = 0);//带权路径长度
     void swapBinarytree();//交换所有左右子树
@@ -56,15 +66,16 @@ public:
     BinaryTree<T> *ancestor(BinaryTree<T> *p, BinaryTree<T> *q);//找到共同祖先
     BinaryTree<T> *find(T x);//找到值为x的结点
     int width();//求宽度
-    BinaryTree<T> *linkLeaf();
+    BinaryTree<T> *linkLeaf();//链接叶结点
     bool isSame(BinaryTree<T> *tr);
     int level(BinaryTree<T> *p, int n = 1); //所在层次
     bool isbalance(int &h);
     virtual void Insert(int x);
-    void lastgen();
+    void lastgen();//输出最后一层结点
+    void printbalance(int &h, bool &balance); //输出平衡节点(非平衡二叉树的根节点依然可能是平衡节点)
 };
 
-void preTopost(int pre[], int begin, int end);
+void preTopost(int pre[], int begin, int end);//满二叉树前序序列转后序序列
 
 template<class T>
 class HFMtree:public BinaryTree<T>{
@@ -123,11 +134,11 @@ public:
     }
     ThreadTree(BinaryTree<T> *tr);
 
-    void preThread();
+    void preThread();//前序线索化
     void preThread(ThreadTree<T> *&pre);
-    void inThread();
+    void inThread();//中序线索化
     void inThread(ThreadTree<T> *&pre);
-    void postThread();
+    void postThread();//后续线索化
     void postThread(ThreadTree<T> *&pre);
 };
 
@@ -149,125 +160,7 @@ public:
 
     Tree(BinaryTree<T> *tr);
 
-    int depth();
-    friend Tree<T> *level_grade_build(T level[], int grade[], int n);
+    int depth();//二叉链表对应树的高度
+    friend Tree<T> *level_grade_build(T level[], int grade[], int n);//给定层序序列,结点的度构造二叉链表树
     bool isSame(Tree<T> *tr);
 };
-// template<class T>
-// class ThreadBinaryTree:public BinaryTree<T>{
-// public:
-//     bool ltag;
-//     bool rtag;
-
-    // ThreadBinaryTree(){
-    //     this->data = 0;
-    //     this->lchild = NULL;
-    //     this->rchild = NULL;
-    //     ltag = false;
-    //     rtag = false;
-    // }
-    // ThreadBinaryTree(T x){
-    //     this->data = x;
-    //     this->lchild = NULL;
-    //     this->rchild = NULL;
-    //     ltag = false;
-    //     rtag = false;
-    // }
-    // ThreadBinaryTree(ThreadBinaryTree<T> *tr){
-    //     this->data = tr->data;
-    //     if(tr.lchild!=NULL){   
-    //         ThreadBinaryTree l(dynamic_cast<ThreadBinaryTree<T> *>(tr.lchild));
-    //         this->lchild = &l;
-    //     }
-    //     else
-    //         this->lchild = NULL;
-    //     if(tr.rchild!=NULL){   
-    //         ThreadBinaryTree r(dynamic_cast<ThreadBinaryTree<T> *>(tr.rchild));
-    //         this->rchild = &r;
-    //     }
-    //     else
-    //         this->rchild = NULL;
-    //     ltag = false;
-    //     rtag = false;
-    // }
-    // ThreadBinaryTree(BinaryTree<T> *tr){
-    //     this->data = tr.data;
-    //     if(tr.lchild!=NULL){   
-    //         ThreadBinaryTree l(dynamic_cast<ThreadBinaryTree<T> *>(tr.lchild));
-    //         this->lchild = &l;
-    //     }
-    //     else
-    //         this->lchild = NULL;
-    //     if(tr.rchild!=NULL){   
-    //         ThreadBinaryTree r(dynamic_cast<ThreadBinaryTree<T> *>(tr.rchild));
-    //         this->rchild = &r;
-    //     }
-    //     else
-    //         this->rchild = NULL;
-//     //     ltag = false;
-//     //     rtag = false;
-//     // }
-// };
-
-// typedef struct BinaryTreeNode{
-//     BinaryTreeNode(){
-//         data = 0;
-//         lchild = NULL;
-//         rchild = NULL;
-//     }
-//     BinaryTreeNode(int r){
-//         data = r;
-//         lchild = NULL;
-//         rchild = NULL;
-//     }
-//     int data;
-//     struct BinaryTreeNode *lchild;
-//     struct BinaryTreeNode *rchild;
-// } *BinaryTree, BinaryTreeNode;
-
-// typedef struct node{
-//     node(){
-//         lchild = NULL;
-//         rchild = NULL;
-//     }
-//     node(char c){
-//         data = c;
-//         lchild = NULL;
-//         rchild = NULL;
-//     }
-
-//     char data;
-//     struct node *lchild, *rchild;
-// } node;
-
-// typedef struct Tree{
-//     int data;
-//     struct Tree *firstchild, *nextsibling;
-// } *Tree, TreeNode;
-
-// BinaryTree BuildBinarytree(int pre[], int in[], int pre1, int pre2, int in1, int in2);
-// template <class T>
-// void visit(T t);
-// template <class T>
-// void InOrder(T t);
-// void PostOrder(BinaryTree T);
-// void levelOrder(BinaryTree T);
-// BinaryTree treetoBinarytree(int level[], int grade[], int k);//树的层序和度构造二叉树
-// void showk(BinaryTree T, int k);//由大到小输出BST大于等于K的节点
-// BinaryTreeNode *findk(BinaryTree T, int k);//找到第K小的元素
-// int WPL(BinaryTree T, int k = 0);//带权路径长度
-// void swapBinarytree(BinaryTree T);//交换所有左右子树
-// BinaryTree buildHFM(int A[], int n);//构造哈夫曼树
-// int generation(BinaryTree T);
-
-// BinaryTreeNode *findk(BinaryTree T, int k){
-
-// }
-
-
-
-
-
-
-
-
