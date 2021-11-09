@@ -41,6 +41,7 @@ bool topoCircle(const Graph &G, int indegree[]);
 void indegree(const MGraph &G, int A[]);
 void indegree(const AlGraph &G, int A[]);
 
+//邻接表到邻接矩阵
 MGraph AltoM(const AlGraph &A)
 {
     MGraph M;
@@ -48,12 +49,12 @@ MGraph AltoM(const AlGraph &A)
     M.edgenum = A.edgenum;
     M.vexnum = n;
     EdgeNode *e;
-    for (int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++){//遍历节点表中每个节点
         M.vex[i] = A.adjlist[i].name;
         e = A.adjlist[i].first;
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < n; j++)//初始化邻接矩阵为0
             M.Edge[i][j] = 0;
-        while(e != nullptr){
+        while(e != nullptr){//修改邻接矩阵边权值
             M.Edge[i][e->adjvex] = e->weight;
             e = e->next;
         }
@@ -113,8 +114,8 @@ bool isTree(const Graph &G){
     for (int i = 0; i < G.getvnum(); i++)
         visited[i] = false;
     int vnum = 0, edgenum = 0;
-    DFStree(G, 0, vnum, edgenum, visited);
-    if(vnum==G.getvnum()&&edgenum==(vnum-1)*2)
+    DFStree(G, 0, vnum, edgenum, visited);//从零号结点出发,一次深度搜索,统计遍历到的节点数量和边数量
+    if(vnum==G.getvnum()&&edgenum==(vnum-1)*2)//满足此关系则为树
         return true;
     return false;
 }
@@ -131,6 +132,7 @@ void DFStree(const Graph &G, int i, int &vnum, int &edgenum, bool visited[]){
     }
 }
 
+//非递归DFS
 void DFStraverse2(const Graph &G){
     bool visited[MaxVertexNum];
     for (int i = 0; i < G.getvnum(); i++)
@@ -219,39 +221,7 @@ bool pathBFS(const Graph &G, char a, char b){
     return pathBFS(G, u, v);
 }
 
-// void printpath(const MGraph &G, char a, char b){
-//     int u = G.cEdge(a), v = G.cEdge(b);
-//     printpath(G, u, v);
-// }
-
-// void printpath(const MGraph &G, int a, int b){
-//     bool visited[MaxVertexNum];
-//     for (int i = 0; i < G.getvnum(); i++)
-//         visited[i] = false;
-//     int path[MaxVertexNum];
-//     DFSprint(G, a, b, 0, path, visited);
-//     cout << endl;
-// }
-
-// void DFSprint(const MGraph &G, int a, int b, int d, int path[], bool visited[]){
-//     path[d] = a;
-//     visited[a] = true;
-//     if(a==b){
-//         for (int i = 0; i <= d; i++)
-//             cout << G.vex[path[i]];
-//         cout << endl;
-//     }
-//     int i = G.FirstNeighbor(a);
-//     while(i!=-1){
-//         if(!visited[i]){
-//             visited[i] = true;
-//             DFSprint(G, i, b, d + 1, path, visited);
-//         }
-//         i = G.NextNeighbor(a, i);
-//     }
-//     visited[a] = false;
-// }
-
+//输出路径,用一个path数组保存路径
 void printpath(const Graph &G, char a, char b){
     int u = G.cEdge(a), v = G.cEdge(b);
     printpath(G, u, v);
@@ -281,34 +251,37 @@ void DFSprint(const Graph &G, int a, int b, int d, int path[], bool visited[]){
     visited[a] = false;
 }
 
+//拓扑排序
+//统计各节点入度,依次输出入读为0的结点,并使以此节点为入节点的结点的度数-1,循环往复
 void toposort(const DMGraph &G){
     queue<int> q;
     int indegree[MaxVertexNum];
-    int n = 0;
-    for (int i = 0; i < G.vexnum; i++){
+    int n = 0;//n统计遍历的节点数量
+    for (int i = 0; i < G.vexnum; i++){//统计入度表
         indegree[i] = 0;
         for (int j = 0; j < G.vexnum; j++){
             if(G.Edge[j][i]!=0)
                 indegree[i]++;
         }
-        if(indegree[i]==0)
+        if(indegree[i]==0)//入度为零则可以进入队列
             q.push(i);
     }
-    while(!q.empty()){
+    while(!q.empty()){//处理队列中的零入度结点
         int k = q.front();
         q.pop();
         cout << G.vex[k];
         n++;
-        for (int w = G.FirstNeighbor(k); w >= 0; w = G.NextNeighbor(k, w)){
+        for (int w = G.FirstNeighbor(k); w >= 0; w = G.NextNeighbor(k, w)){//修改入度表
             indegree[w]--;
-            if(indegree[w]==0)
+            if(indegree[w]==0)//入度为零则可以进入队列
                 q.push(w);
         }
     }
-    if(n<G.vexnum)
+    if(n<G.vexnum)//若n<总节点数量,说明没有遍历完全,存在环
         cout << "无拓扑排序" << endl;
 }
 
+//求连通分量,一次DFS
 void component(const Graph &G){
     bool visited[MaxVertexNum];
     int A[MaxVertexNum];
@@ -338,6 +311,7 @@ void DFS_c(const Graph &G, int k, int A[], int &n, bool visited[]){
     }
 }
 
+//有无环,一次拓朴排序
 bool isCircle(const MGraph &G){
     int inde[MaxVertexNum];
     indegree(G, inde);
@@ -371,6 +345,7 @@ bool topoCircle(const Graph &G, int indegree[]){
     return false;
 }
 
+//求入度
 void indegree(const MGraph &G, int A[]){
     for (int i = 0; i < G.getvnum(); i++){
         int degr = 0;

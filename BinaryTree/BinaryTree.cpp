@@ -258,15 +258,16 @@ void BinaryTree<T>::levelOrder(T *A){
     cout << endl;
 }
 
+//给出树的层序遍历及对应节点的度,构造对应的二叉链表树
 template<class T>
 BinaryTree<T>* treetoBinarytree(T level[], int grade[], int k){
-    int x = 0, y = 0;
+    int x = 0, y = 0;//标记数组中已插入的结点序号
     BinaryTree<T> *root = new BinaryTree<T>(level[x++]);
     BinaryTree<T> *p;
     queue<BinaryTree<T> *> Q;
     queue<int> g;
-    Q.push(root);
-    g.push(grade[y++]);
+    Q.push(root);//结点队列
+    g.push(grade[y++]);//度队列
     while(x<k){
         p = Q.front();
         Q.pop();
@@ -276,7 +277,7 @@ BinaryTree<T>* treetoBinarytree(T level[], int grade[], int k){
         g.push(grade[y++]);
         p->lchild = child;
         p = p->lchild;
-        for (int i = 1; i < n; i++){
+        for (int i = 1; i < n; i++){//根据度,循环添加nextsibling
             BinaryTree<T> child = new BinaryTree<T>(level[x++]);
             p->rchild = child;
             p = p->rchild;
@@ -287,6 +288,7 @@ BinaryTree<T>* treetoBinarytree(T level[], int grade[], int k){
     return root;
 }
 
+//输出树存储的表达式
 template<class T>
 void BinaryTree<T>::disp(int deep){
     if(this==NULL)
@@ -294,7 +296,7 @@ void BinaryTree<T>::disp(int deep){
     if(this->lchild==NULL&&this->rchild==NULL)
         cout << this->data;
     else{
-        if(deep>1)
+        if(deep>1)//层数大于1则加括号
             cout << '(';
         this->disp(deep + 1);
         cout << this->data;
@@ -304,6 +306,7 @@ void BinaryTree<T>::disp(int deep){
     }
 }
 
+//带权路径长度
 template<class T>
 int BinaryTree<T>::WPL(int k){
     if(this==NULL)
@@ -312,6 +315,7 @@ int BinaryTree<T>::WPL(int k){
         return (this->data) * k + this->lchild->WPL(k + 1) + this->rchild->WPL(k + 1);
 }
 
+//交换左右子树
 template<class T>
 void BinaryTree<T>::swapBinarytree(){
     if(this==NULL)
@@ -323,12 +327,13 @@ void BinaryTree<T>::swapBinarytree(){
     this->rchild->swapBinarytree();
 }
 
+//树高,递归
 template<class T>
 int BinaryTree<T>::generation(){
     if(this->lchild==NULL&&this->rchild==NULL)
         return 1;
     else{
-        int l=0, r=0;
+        int l=0, r=0;//左右子树高度
         if(this->lchild!=NULL)
             l = this->lchild->generation() + 1;
         if(this->rchild!=NULL)
@@ -337,6 +342,8 @@ int BinaryTree<T>::generation(){
     }
 }
 
+//树高,非递归
+//层序遍历,last标记每一层最后一个节点,每当遍历到last,层数++
 template<class T>
 int BinaryTree<T>::hight(){
     BinaryTree<T> *que[100];
@@ -359,12 +366,13 @@ int BinaryTree<T>::hight(){
     return high;
 }
 
+//是否是完全二叉树
 template<class T>
 bool BinaryTree<T>::iscomplete(){
     BinaryTree<T> *tr = this;
     queue<BinaryTree<T> *> q;
     q.push(tr);
-    while(!q.empty()){
+    while(!q.empty()){//层序遍历,遍历到某个结点的孩子节点有NULL时,break
         tr = q.front();
         q.pop();
         if(tr->lchild!=NULL)
@@ -376,7 +384,7 @@ bool BinaryTree<T>::iscomplete(){
         else
             break;
     }
-    while(!q.empty()){
+    while(!q.empty()){//判断队列内后续的结点的孩子是否都为NULL,不然则不是完全二叉树
         tr = q.front();
         q.pop();
         if(tr->lchild!=NULL||tr->rchild!=NULL)
@@ -385,6 +393,7 @@ bool BinaryTree<T>::iscomplete(){
     return true;
 }
 
+//返回有两个孩子的节点数量
 template<class T>
 int BinaryTree<T>::dson(){
     int l = 0;
@@ -399,6 +408,7 @@ int BinaryTree<T>::dson(){
         return 0;
 }
 
+//删除值为x的节点
 template<class T>
 void BinaryTree<T>::deletevalue(T x){
     if(this->data==x){
@@ -410,6 +420,8 @@ void BinaryTree<T>::deletevalue(T x){
         this->rchild->deletevalue(x);
 }
 
+
+//删除树
 template<class T>
 void BinaryTree<T>::deleteroot(){
     if(this->lchild!=NULL){
@@ -423,11 +435,14 @@ void BinaryTree<T>::deleteroot(){
     delete this;
 }
 
+
+//输出从根节点到x结点的路径
+//后序遍历栈中所保存的即路径
 template<class T>
 void BinaryTree<T>::printroute(T x){
     stack<BinaryTree<T> *> s;
     BinaryTree<T> *tr = this, *r = NULL;
-    while(tr!=NULL||!s.empty()){
+    while(tr!=NULL||!s.empty()){//后序遍历找x结点
         if(tr!=NULL){
             s.push(tr);
             tr = tr->lchild;
@@ -441,31 +456,33 @@ void BinaryTree<T>::printroute(T x){
             }
             else{
                 if(tr->data==x)
-                    break;
+                    break;//找到后break
                 s.pop();
                 r = tr;
                 tr = NULL;
             }
         }
     }
-    while(!s.empty()){
+    while(!s.empty()){//输出栈中元素
         cout << s.top()->data << "<-";
         s.pop();
     }
     cout << endl;
 }
 
+//辅助栈
 template<class T>
 struct stac{
     BinaryTree<T> *tree;
-    bool tag;
+    bool tag;//标记是否为第一个节点的路径
 };
-
+//两个节点的最近公共祖先
+//求两个结点的路径,再找公共的部分
 template<class T>
 BinaryTree<T> *BinaryTree<T>::ancestor(BinaryTree<T> *p, BinaryTree<T> *q){
     stac<T> s[100];
-    int top = -1;
-    bool find = false;
+    int top = -1;//顺序栈初始化
+    bool find = false;//有没有找到第一个节点
     BinaryTree<T> *tr1 = p, *tr2 = q, *tr = this, *r = NULL;
     while(tr!=NULL||top!=-1){
         if(tr!=NULL){
@@ -478,17 +495,17 @@ BinaryTree<T> *BinaryTree<T>::ancestor(BinaryTree<T> *p, BinaryTree<T> *q){
             if(tr->rchild!=NULL&&tr->rchild!=r){
                 tr = tr->rchild;
                 s[++top].tree = tr;
-                s[top].tag = false;
+                s[top].tag = false;//false表示不是第一个节点的路径
                 tr = tr->lchild;
             }
             else{
                 top--;
-                if(!find&&(tr==p||tr==q)){
+                if(!find&&(tr==p||tr==q)){//找到第一个节点
                     for (int i = 0; i <= top; i++)
-                        s[i].tag = true;
-                    find = true;
+                        s[i].tag = true;//标记栈中所有元素为true,表示是第一个节点的路径
+                    find = true;//找到第一个节点
                 }
-                if(find&&(tr==p||tr==q)){
+                if(find&&(tr==p||tr==q)){//找到第二个节点,break
                     break;
                 }
                 r = tr;
@@ -496,10 +513,12 @@ BinaryTree<T> *BinaryTree<T>::ancestor(BinaryTree<T> *p, BinaryTree<T> *q){
             }
         }    
     }
-    for (; top != -1 && !s[top].tag; top--);
+    for (; top != -1 && !s[top].tag; top--);//检查栈中的元素,依次弹出至标记为true的结点,该节点为第一个找到的结点上的路径结点
     return s[top].tree;
 }
 
+
+//找值为x的结点
 template<class T>
 BinaryTree<T> *BinaryTree<T>::find(T x){
     if(this==NULL||this->data==x)
@@ -510,10 +529,12 @@ BinaryTree<T> *BinaryTree<T>::find(T x){
     return l == NULL ? r : l;
 }
 
+//求二叉树的最大宽度,其中一层上的节点个数
+//标记每层上最后一个节点last,每当遍历到last,比较wide和i
 template<class T>
 int BinaryTree<T>::width(){
     BinaryTree<T> *q[100];
-    int front = -1, rear = -1, last, wide = 0, i = 0;
+    int front = -1, rear = -1, last, wide = 0, i = 0;//初始化辅助队列,last为该层最后一个节点,i记录该层宽度
     BinaryTree<T> *tr = this;
     q[++rear]=tr;
     last = rear;
@@ -534,6 +555,8 @@ int BinaryTree<T>::width(){
     return wide;
 }
 
+//链接所有叶子节点为一个链表,以右孩子指针为next指针
+//中序遍历+链表头插法,需要p指针标记前一个链表节点
 template<class T>
 BinaryTree<T> *BinaryTree<T>::linkLeaf(){
     BinaryTree<T> *head = new BinaryTree<int>;
@@ -547,7 +570,7 @@ BinaryTree<T> *BinaryTree<T>::linkLeaf(){
         else{
             tr = s.top();
             s.pop();
-            if(tr->lchild==NULL&&tr->rchild==NULL){
+            if(tr->lchild==NULL&&tr->rchild==NULL){//如果是叶子节点
                 p->rchild = tr;
                 p = tr;
             }
@@ -557,6 +580,7 @@ BinaryTree<T> *BinaryTree<T>::linkLeaf(){
     return head;
 }
 
+//比较两棵树是否相同
 template<class T>
 bool BinaryTree<T>::isSame(BinaryTree<T> *tr){
     if(this==NULL&&tr==NULL)
@@ -569,6 +593,9 @@ bool BinaryTree<T>::isSame(BinaryTree<T> *tr){
         return false;
 }
 
+
+//找到结点p在树中的层数
+//递归遍历,没找到返回0,找到返回n,n用来标记层数,每进入下一层+1
 template<class T>
 int BinaryTree<T>::level(BinaryTree<T> *p, int n){
     if(this==NULL)
@@ -585,15 +612,18 @@ int BinaryTree<T>::level(BinaryTree<T> *p, int n){
         return 0;
 }
 
+//是否是平衡二叉树
+//lh rh左右子树高度,lb rb左右子树是否平衡
+//递归遍历,h存储树高即lh和rh中大者
 template<class T>
 bool BinaryTree<T>::isbalance(int &h){
     bool lb = true, rb = true;
     int lh = 0, rh = 0;
-    if(this==NULL){
+    if(this==NULL){//空返回true
         h = 0;
         return true;
     }
-    else if(this->lchild==NULL&&this->rchild==NULL){
+    else if(this->lchild==NULL&&this->rchild==NULL){//左右都空,返回true
         h = 1;
         return true;
     }
@@ -601,9 +631,9 @@ bool BinaryTree<T>::isbalance(int &h){
         lb = this->lchild->isbalance(lh);
     if(this->rchild!=NULL)
         rb = this->rchild->isbalance(rh);
-    if(!lb||!rb)
+    if (!lb || !rb) //左右一个不平衡就返回false
         return false;
-    else{
+    else{//左右都平衡记录树高,检查平衡性
         h = (lh > rh ? lh : rh) + 1;
         return abs(lh - rh) > 1 ? false : true;
     }
@@ -614,49 +644,53 @@ void BinaryTree<T>::Insert(int x){
     return;
 }
 
+//给定结点权值,构造哈夫曼树
+//建立节点数组(优先队列数组),依次取出最小的两个组合为一个加入节点数组
 template<class T>
 HFMtree<T>* buildHFM(T A[], int n){
     HFMtree<T> *Node[n];
-    for (int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++){//建立节点数组
         HFMtree<T> *p = new HFMtree<T>(A[i]);
         p->lchild = NULL;
         p->rchild = NULL;
         Node[i] = p;
     }
-    int k1 = -1, k2 = -1;
+    int k1 = -1, k2 = -1;//标记最小两个节点的序号
     for (int i = 0; i < n;i++){
-        for (int j = 0; j < n;j++){
+        for (int j = 0; j < n;j++){//手动优先队列,选出第一个最小的
             if(Node[j]==NULL)
                 continue;
             if(k1==-1||Node[k1]==NULL||Node[k1]->data>Node[j]->data)
                 k1 = j;
         }
-        for (int j = 0; j < n;j++){
+        for (int j = 0; j < n;j++){//选出第二个最小的
             if(Node[j]==NULL||k1==j)
                 continue;
             if(k2==-1||Node[k2]==NULL||Node[k2]->data>Node[j]->data)
                 k2 = j;
         }
-        if(Node[k2]==NULL){
+        if(Node[k2]==NULL){//如果第二个结点没选,即没有更多节点了,则构造完成
             HFMtree<T> *r;
             r = Node[k1];
             return r;
         }
-        HFMtree<T> *t = new HFMtree<T>(Node[k1]->data + Node[k2]->data);
+        HFMtree<T> *t = new HFMtree<T>(Node[k1]->data + Node[k2]->data);//以最小的两个节点为孩子节点构造新结点
         t->lchild = Node[k1];
         t->rchild = Node[k2];
-        Node[k1] = t;
+        Node[k1] = t;//新节点加入到节点数组
         Node[k2] = NULL;
     }
 }
 
+//构造二叉搜索树,依次插入结点
 BinarySearchTree *BuildBinarySearchTree(int A[], int n){
     BinarySearchTree *root = new BinarySearchTree(A[0]);
     for (int i = 1; i < n; i++)
         root->Insert(A[i]);
     return root;
 }
-
+//二叉搜索树插入节点
+//由于二叉搜索树的孩子节点继承自二叉树,是二叉树指针类型,需要强制转换成二叉搜索树指针类型dynamic_cast<BinarySearchTree *>
 void BinarySearchTree::Insert(int x){
     if(this->data==x){
         cout << "结点已存在" << endl;
@@ -680,6 +714,8 @@ void BinarySearchTree::Insert(int x){
     }
 }
 
+
+//输出二叉搜索树中所有大于k的结点
 void BinarySearchTree::showk(int k){
     stack<BinaryTree *> S;
     BinaryTree *p = this;
@@ -700,6 +736,7 @@ void BinarySearchTree::showk(int k){
     }
 }
 
+//前序序列转后序序列
 void preTopost(int pre[], int begin, int end){
     if(begin<end-1){
         int temp = pre[end];
@@ -718,6 +755,7 @@ void preTopost(int pre[], int begin, int end){
     preTopost(pre, begin+(end-begin) / 2, begin+(end-begin) - 1);
 }
 
+//输出最后一层结点
 template<class T>
 void BinaryTree<T>::lastgen(){
     BinaryTree<T> *Q[maxsize];
@@ -744,6 +782,7 @@ void BinaryTree<T>::lastgen(){
         visit(Q[i]);
 }
 
+//输出所有平衡节点,不是平衡二叉树的根节点依然可能是平衡节点
 template<class T>
 void BinaryTree<T>::printbalance(int &h, bool &balance){
     if(this==NULL){
@@ -761,6 +800,7 @@ void BinaryTree<T>::printbalance(int &h, bool &balance){
         cout << this->data << ',';
 }
 
+//二叉树转换为线索二叉树
 template<class T>
 ThreadTree<T>::ThreadTree(BinaryTree<T> *tr){
     data = tr->data;
@@ -770,24 +810,25 @@ ThreadTree<T>::ThreadTree(BinaryTree<T> *tr){
     rtag = false;
 }
 
+//前序线索化
 template<class T>
 void ThreadTree<T>::preThread(){
-    ThreadTree *pre = NULL;
+    ThreadTree *pre = NULL;//pre用于标记前序遍历时前一个结点,初始为NULL
     if(this){
         this->preThread(pre);
-        pre->rchild = NULL;
+        pre->rchild = NULL;//最后遍历的节点后继为NULL
         pre->rtag = true;
     }
 }
-
+//递归遍历并添加线索
 template<class T>
 void ThreadTree<T>::preThread(ThreadTree<T> *&pre){
     if(this!=NULL){
-        if(this->lchild==NULL){
+        if(this->lchild==NULL){//左孩子为空,需要改左孩子为前驱线索指向pre
             this->lchild = pre;
             this->ltag = true;
         }
-        if(pre!=NULL&&pre->rchild==NULL){
+        if(pre!=NULL&&pre->rchild==NULL){//pre的右孩子为空,需要改pre的右孩子为后继线索指向当前结点
             pre->rchild = this;
             pre->rtag = true;
         }
@@ -798,7 +839,7 @@ void ThreadTree<T>::preThread(ThreadTree<T> *&pre){
             this->rchild->preThread(pre);
     }
 }
-
+//同上,只是添加线索的顺序改为中序
 template<class T>
 void ThreadTree<T>::inThread(){
     ThreadTree *pre = NULL;
@@ -826,6 +867,7 @@ void ThreadTree<T>::inThread(ThreadTree<T> *&pre){
     }
 }
 
+//添加线索的顺序改为后续
 template<class T>
 void ThreadTree<T>::postThread(){
     ThreadTree *pre = NULL;
@@ -855,6 +897,7 @@ void ThreadTree<T>::postThread(ThreadTree<T> *&pre){
     }
 }
 
+//以二叉树的形状构造树
 template<class T>
 Tree<T>::Tree(BinaryTree<T> *tr){
     data = tr->data;
@@ -862,6 +905,7 @@ Tree<T>::Tree(BinaryTree<T> *tr){
     nextsibling = tr->rchild != NULL ? new Tree(tr->rchild) : NULL;
 }
 
+//原树的深度,访问左孩子则深度+1
 template<class T>
 int Tree<T>::depth(){
     if(this==NULL)
@@ -876,13 +920,12 @@ struct Queue{
     Tree<T>* tr;
     int degrade;
 };
-
+//与之前的做法相同
 template<class T>
 Tree<T> *level_grade_build(T level[], int grade[], int n){
     Queue<T> Q[maxsize];
     int i = -1, rear = -1, front = -1;
     Tree<T> *root = new Tree<T>(level[++i]);
-    //root->firstchild = root->nextsibling = NULL;
     Tree<T> *p = root;
     Q[++rear].tr = p;
     Q[rear].degrade = grade[i];
