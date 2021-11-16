@@ -24,13 +24,14 @@ public:
     }
 
 int main(){
-    fstream iofile("student.txt", ios::in | ios::out|ios::trunc);
+    fstream iofile("student.txt", ios::in | ios::out | ios::app);
     if(!iofile){
         cout <<"文件无法打开" << endl;
         return 0;
     }
     student s[10];
     for (int i = 0; i < 3; i++){
+        iofile.write("success!", 8);
         cout << "输入:" << endl;
         cin >> s[i];
         iofile << s[i] << endl;
@@ -40,5 +41,6 @@ int main(){
     while(iofile.getline(c,20)){
         cout << c;
     }
+    
     cout << endl;
 }

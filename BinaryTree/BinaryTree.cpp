@@ -800,6 +800,22 @@ void BinaryTree<T>::printbalance(int &h, bool &balance){
         cout << this->data << ',';
 }
 
+template<class T>
+ostream &operator<<(ostream &out, BinaryTree<T> *tr){
+    if(tr==NULL)
+        return out;
+    out << tr->data;
+    if(tr->rchild!=NULL||tr->lchild!=NULL)
+        out << '(';
+    out << tr->lchild;
+    if(tr->rchild!=NULL||tr->lchild!=NULL)
+        out << ',';
+    out << tr->rchild;
+    if(tr->rchild!=NULL||tr->lchild!=NULL)
+        out << ')';
+    return out;
+}
+
 //二叉树转换为线索二叉树
 template<class T>
 ThreadTree<T>::ThreadTree(BinaryTree<T> *tr){
@@ -905,6 +921,32 @@ Tree<T>::Tree(BinaryTree<T> *tr){
     nextsibling = tr->rchild != NULL ? new Tree(tr->rchild) : NULL;
 }
 
+template<class T>
+void Tree<T>::LevelOrder(){
+    queue<Tree<T> *> Q;
+    Tree<T> *p = this;
+    Q.push(p);
+    while(!Q.empty()){
+        p = Q.front();
+        Q.pop();
+        p->visit();
+        if(p->firstchild!=NULL)
+            Q.push(p->firstchild);
+        if(p->nextsibling!=NULL)
+            Q.push(p->nextsibling);
+    }
+}
+
+template<class T>
+void Tree<T>::PreOrder(){
+    if(this!=NULL){
+        this->visit();;
+        this->firstchild->PreOrder();
+        this->nextsibling->PreOrder();
+    }
+}
+
+
 //原树的深度,访问左孩子则深度+1
 template<class T>
 int Tree<T>::depth(){
@@ -950,6 +992,28 @@ Tree<T> *level_grade_build(T level[], int grade[], int n){
         }
     }
     return root;
+}
+
+template<class T>
+Tree<T> *level_grade_build2(T level[], int grade[], int n){
+    Tree<T> *Node[maxsize];
+    for (int i = 0; i < n; i++)
+        Node[i] = new Tree<T>(level[i]);
+    int j = 1;
+    for (int i = 0; i < n; i++){
+        int k = grade[i];
+        if(k!=0){
+            Node[i]->firstchild = Node[j];
+            k--;
+            while(k>0){
+                Node[j]->nextsibling = Node[j + 1];
+                j++;
+                k--;
+            }
+            j++;
+        }
+    }
+    return Node[0];
 }
 
 template <class T>

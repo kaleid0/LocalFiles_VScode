@@ -6,8 +6,8 @@
             "command": "C:\\MinGW\\bin\\g++.exe",
             "args": [
                 "-g",
-                //"main.cpp",
-                "C:\\CPP\\BinaryTree\\main.cpp",
+                "main.cpp",
+                //"C:\\CPP\\BinaryTree\\main.cpp",
                 //"C:\\CPP\\Graph\\main.cpp",
                 //"C:\\CPP\\menu\\main.cpp",
                 //"C:\\CPP\\sort\\main.cpp",

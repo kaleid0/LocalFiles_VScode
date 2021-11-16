@@ -73,6 +73,7 @@ public:
     virtual void Insert(int x);
     void lastgen();//输出最后一层结点
     void printbalance(int &h, bool &balance); //输出平衡节点(非平衡二叉树的根节点依然可能是平衡节点)
+    friend ostream &operator<<(ostream &out, BinaryTree<T> tr);
 };
 
 void preTopost(int pre[], int begin, int end);//满二叉树前序序列转后序序列
@@ -81,8 +82,8 @@ template<class T>
 class HFMtree:public BinaryTree<T>{
 public:
     HFMtree(){
-        this->data = 0;
-        this->lchild = NULL;
+        BinaryTree<T>::data = 0;
+        BinaryTree<T>::lchild = NULL;
         this->rchild = NULL;
     }
     HFMtree(T r){
@@ -121,13 +122,13 @@ public:
     ThreadTree<T> *rchild;
 
     ThreadTree(){
-        this->data = 0;
+        data = 0;
         lchild = NULL;
         rchild = NULL;
         ltag = rtag = false;
     }
     ThreadTree(T r){
-        this->data = r;
+        data = r;
         lchild = NULL;
         rchild = NULL;
         ltag = rtag = false;
@@ -150,17 +151,25 @@ public:
     Tree *firstchild, *nextsibling;
 
     Tree(){
-        this->data = 0;
+        data = 0;
         firstchild = nextsibling = NULL;
     }
     Tree(T r){
-        this->data = r;
+        data = r;
         firstchild = nextsibling = NULL;
+    }
+
+    void visit(){
+        cout << data << ',';
     }
 
     Tree(BinaryTree<T> *tr);
 
+    void LevelOrder();
+    void PreOrder();
+
     int depth();//二叉链表对应树的高度
     friend Tree<T> *level_grade_build(T level[], int grade[], int n);//给定层序序列,结点的度构造二叉链表树
+    friend Tree<T> *level_grade_build2(T level[], int grade[], int n);
     bool isSame(Tree<T> *tr);
 };
