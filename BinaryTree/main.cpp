@@ -15,6 +15,11 @@ int main(){
 
     BinaryTree<int> *T1 = level_BuildBT(level, 10);
     BinaryTree<int> &T2 = *T1;
+    BinarySearchTree *T3;
+    T3 = BuildBinarySearchTree(pre1, 10);
+    T3->PreOrder();
+    T3->levelOrder();
+    bool i = T1->isBST();
     cout << T1;
     system("pause");
 }

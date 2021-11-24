@@ -640,6 +640,26 @@ bool BinaryTree<T>::isbalance(int &h){
 }
 
 template<class T>
+bool BinaryTree<T>::isBST(){
+    if(this==NULL)
+        return true;
+    bool l = true, r = true;
+    if(this->lchild!=NULL){
+        if(this->lchild->data>this->data)
+            l = false;
+        else
+            l = this->lchild->isBST();
+    }
+    if(this->rchild!=NULL){
+        if(this->rchild->data<this->data)
+            r = false;
+        else
+            r = this->rchild->isBST();
+    }
+    return l && r;
+}
+
+template<class T>
 void BinaryTree<T>::Insert(int x){
     return;
 }

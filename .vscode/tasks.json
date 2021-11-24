@@ -6,14 +6,15 @@
             "command": "C:\\MinGW\\bin\\g++.exe",
             "args": [
                 "-g",
-                "main.cpp",
-                //"C:\\CPP\\BinaryTree\\main.cpp",
+                //"main.cpp",
+                "C:\\CPP\\BinaryTree\\main.cpp",
                 //"C:\\CPP\\Graph\\main.cpp",
                 //"C:\\CPP\\menu\\main.cpp",
                 //"C:\\CPP\\sort\\main.cpp",
-                //"C:\\CPP\\iostream\\6.cpp",
+                //"C:\\CPP\\iostream\\7.cpp",
                 //"C:\\CPP\\sort\\main.cpp",
                 //"C:\\CPP\\string\\main.cpp",
+                //"C:\\CPP\\vector\\main.cpp",
                 "-o",
                 "${fileDirname}\\main.exe"
             ],

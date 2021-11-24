@@ -4,7 +4,7 @@
 using namespace std;
 
 int main(){
-    ifstream infile("text3.txt", ios::in);
+    fstream infile("text3.txt", ios::in);
     if(!infile){
         cout << "文件打开失败" << endl;
         return 0;

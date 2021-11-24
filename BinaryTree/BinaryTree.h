@@ -73,7 +73,8 @@ public:
     virtual void Insert(int x);
     void lastgen();//输出最后一层结点
     void printbalance(int &h, bool &balance); //输出平衡节点(非平衡二叉树的根节点依然可能是平衡节点)
-    friend ostream &operator<<(ostream &out, BinaryTree<T> tr);
+    friend ostream &operator<<(ostream &out, BinaryTree<T> tr);//以表的形式输出
+    bool isBST();//是否是二叉搜索树
 };
 
 void preTopost(int pre[], int begin, int end);//满二叉树前序序列转后序序列
