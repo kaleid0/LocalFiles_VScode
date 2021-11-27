@@ -18,6 +18,10 @@ class HFMtree;//哈夫曼树
 class BinarySearchTree;//二叉搜索树,二叉排序树
 template <class T>
 class ThreadTree;//线索二叉树
+template <class T>
+class node;//二叉树静态链表结点
+template <class T>
+class ListBTree;//二叉树静态链表
 
 template<class T>
 class BinaryTree{
@@ -173,4 +177,37 @@ public:
     friend Tree<T> *level_grade_build(T level[], int grade[], int n);//给定层序序列,结点的度构造二叉链表树
     friend Tree<T> *level_grade_build2(T level[], int grade[], int n);
     bool isSame(Tree<T> *tr);
+};
+
+
+template<class T>
+class node{
+private:
+    T data;
+    int lchild, rchild;
+public:
+    friend class ListBTree<T>;
+    node(){
+        data = -1;
+        lchild = rchild = -1;
+    }
+    node(T x){
+        data = x;
+        lchild = rchild = -1;
+    }
+    friend ostream &operator<<(ostream &os, node p);
+    void print();
+};
+
+
+template<class T>
+class ListBTree{
+private:
+    node<T> *list;
+    int size;
+public:
+    ListBTree(BinaryTree<T> *p);
+    friend ostream &operator<<(ostream &os, ListBTree &p);
+    void print();
+    ~ListBTree() { delete[] list; }
 };

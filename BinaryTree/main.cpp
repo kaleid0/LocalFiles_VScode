@@ -1,7 +1,6 @@
 #include<iostream>
 #include"BinaryTree.h"
 #include"BinaryTree.cpp"
-//#include"LinkList\\LinkList.h"
 
 using namespace std;
 
@@ -13,14 +12,9 @@ int main(){
     int level[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     int grade[] = {3, 3, 1, 2, 0, 0, 0, 0, 0, 0};
 
-    BinaryTree<int> *T1 = level_BuildBT(level, 10);
-    BinaryTree<int> &T2 = *T1;
-    BinarySearchTree *T3;
-    T3 = BuildBinarySearchTree(pre1, 10);
-    T3->PreOrder();
-    T3->levelOrder();
-    bool i = T1->isBST();
-    cout << T1;
+    BinaryTree<int> *T1 = pre_in_BuildBT(pre1, in1, 0, 9, 0, 9);
+    ListBTree<int> T2(T1);
+    T2.print();
     system("pause");
 }
 
