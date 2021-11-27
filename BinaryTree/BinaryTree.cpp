@@ -1047,3 +1047,65 @@ bool Tree<T>::isSame(Tree<T> *tr){
     else
         return this->firstchild->isSame(tr->firstchild) && this->nextsibling->isSame(tr->nextsibling);
 }
+
+
+
+template<class T>
+ostream &operator<<(ostream &os, node<T> p){
+    os << p.data << '\t' << p.lchild << '\t' << p.rchild;
+    return os;
+}
+
+template<class T>
+void node<T>::print(){
+    cout << data << '\t' << lchild << '\t' << rchild;
+}
+
+//层序遍历构造静态链表
+template<class T>
+ListBTree<T>::ListBTree(BinaryTree<T> *p){
+    if(p==NULL){
+        size = 0;
+        list = NULL;
+        return;
+    }
+    queue<BinaryTree<T> *> Q;
+    BinaryTree<T> *temp;
+    list = new node<T>[20];
+    size = 1;
+    list[0].data = (p->data);
+    Q.push(p);
+    int last = 0, t = 0;
+    while(!Q.empty()){
+        temp = Q.front();
+        Q.pop();
+        if(temp->lchild!=NULL){
+            list[++last].data = temp->lchild->data;
+            list[t].lchild = list[last].data;
+            Q.push(temp->lchild);
+            size++;
+        }
+        if(temp->rchild!=NULL){
+            list[++last].data = temp->rchild->data;
+            list[t].rchild = list[last].data;
+            Q.push(temp->rchild);
+            size++;
+        }
+        t++;
+    }
+}
+
+template<class T>
+ostream &operator<<(ostream &os, ListBTree<T> &p){
+    for (int i = 0; i < p.size; i++)
+        os << i << ':' << p.list[i] << endl;
+    return os;
+}
+
+template<class T>
+void ListBTree<T>::print(){
+    for (int i = 0; i < size; i++){
+        list[i].print();
+        cout << endl;
+    }
+}
