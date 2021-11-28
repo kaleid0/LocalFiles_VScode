@@ -1,7 +1,140 @@
 #pragma once
 #include"BinaryTree.h"
 
+// BinaryTree<T> *pre_in_BuildBT(T pre[], T in[], int pre1, int pre2, int in1, int in2);
+// BinaryTree<T> *post_in_BuildBT(T post[], T in[], int post1, int post2, int in1, int in2);
+// BinaryTree<T> *in_level_BuildBT(T level[], T in[], int in1, int in2, int n);
+// BinaryTree<T> *level_in_BuildBT(T level[], T in[], int n);
+// int locate(T A[], T x, int n);
+// BinaryTree<T> *level_BuildBT(T A[], int n);
 
+
+// void BinaryTree<T>::PreOrder();
+// void BinaryTree<T>::InOrder();
+// void BinaryTree<T>::PostOrder();
+// void BinaryTree<T>::levelOrder();
+// void BinaryTree<T>::PreOrder(T *A);
+// void BinaryTree<T>::InOrder(T *A);
+// void BinaryTree<T>::PostOrder(T *A);
+// void BinaryTree<T>::levelOrder(T *A);
+
+
+// //给出树的层序遍历及对应节点的度,构造对应的二叉链表树
+// BinaryTree<T> *treetoBinarytree(T level[], int grade[], int k);
+
+// //输出树存储的表达式
+// void BinaryTree<T>::disp(int deep);
+
+// //带权路径长度
+// int BinaryTree<T>::WPL(int k);
+
+// //交换左右子树
+// void BinaryTree<T>::swapBinarytree();
+
+// //树高,递归
+// int BinaryTree<T>::generation();
+
+// //树高,非递归
+// int BinaryTree<T>::hight();
+
+// //是否是完全二叉树
+// bool BinaryTree<T>::iscomplete();
+
+// //返回有两个孩子的节点数量
+// int BinaryTree<T>::dson();
+
+// //删除值为x的节点
+// void BinaryTree<T>::deletevalue(T x);
+
+// //删除树
+// void BinaryTree<T>::deleteroot();
+
+// //输出从根节点到x结点的路径
+// void BinaryTree<T>::printroute(T x);
+
+// //两个节点的最近公共祖先
+// BinaryTree<T> *BinaryTree<T>::ancestor(BinaryTree<T> *p, BinaryTree<T> *q);
+
+// //找值为x的结点
+// BinaryTree<T> *BinaryTree<T>::find(T x);
+
+// //求二叉树的最大宽度,其中一层上的节点个数
+// int BinaryTree<T>::width();
+
+// //链接所有叶子节点为一个链表,以右孩子指针为next指针
+// BinaryTree<T> *BinaryTree<T>::linkLeaf();
+
+// //比较两棵树是否相同
+// bool BinaryTree<T>::isSame(BinaryTree<T> *tr);
+
+// //找到结点p在树中的层数
+// int BinaryTree<T>::level(BinaryTree<T> *p, int n);
+
+// //是否是平衡二叉树
+// bool BinaryTree<T>::isbalance(int &h);
+
+// bool BinaryTree<T>::isBST();
+
+// //给定结点权值,构造哈夫曼树
+// HFMtree<T> *buildHFM(T A[], int n);
+
+// //构造二叉搜索树,依次插入结点
+// BinarySearchTree *BuildBinarySearchTree(int A[], int n);
+// //二叉搜索树插入节点
+// void BinarySearchTree::Insert(int x);
+
+// //输出二叉搜索树中所有大于k的结点
+// void BinarySearchTree::showk(int k);
+
+// //前序序列转后序序列
+// void preTopost(int pre[], int begin, int end);
+
+// //输出最后一层结点
+// void BinaryTree<T>::lastgen();
+
+// //输出所有平衡节点,不是平衡二叉树的根节点依然可能是平衡节点
+// void BinaryTree<T>::printbalance(int &h, bool &balance);
+
+// ostream &operator<<(ostream &out, BinaryTree<T> *tr);
+
+// //二叉树转换为线索二叉树
+// ThreadTree<T>::ThreadTree(BinaryTree<T> *tr);
+
+// //前序线索化
+// void ThreadTree<T>::preThread();
+// void ThreadTree<T>::preThread(ThreadTree<T> *&pre);
+
+// void ThreadTree<T>::inThread();
+// void ThreadTree<T>::inThread(ThreadTree<T> *&pre);
+
+// //添加线索的顺序改为后续
+// void ThreadTree<T>::postThread();
+// void ThreadTree<T>::postThread(ThreadTree<T> *&pre);
+
+// //以二叉树的形状构造树
+// Tree<T>::Tree(BinaryTree<T> *tr);
+
+// void Tree<T>::LevelOrder();
+// void Tree<T>::PreOrder();
+
+// //原树的深度,访问左孩子则深度+1
+// int Tree<T>::depth();
+
+// Tree<T> *level_grade_build(T level[], int grade[], int n);
+// Tree<T> *level_grade_build2(T level[], int grade[], int n);
+
+// bool Tree<T>::isSame(Tree<T> *tr);
+
+// ostream &operator<<(ostream &os, node<T> p);
+
+// void node<T>::print();
+
+// //层序遍历构造静态链表
+// ListBTree<T>::ListBTree(BinaryTree<T> *p);
+
+// ostream &operator<<(ostream &os, ListBTree<T> &p);
+
+// void ListBTree<T>::print();
 
 template<class T>
 BinaryTree<T>* pre_in_BuildBT(T pre[], T in[], int pre1, int pre2, int in1, int in2){
@@ -39,8 +172,9 @@ BinaryTree<T>* post_in_BuildBT(T post[], T in[], int post1, int post2, int in1, 
     return root;
 }
 
+//以中序为基准,递归构造
 template<class T>
-BinaryTree<T> *level_in_BuildBT(T level[], T in[], int in1, int in2, int n){
+BinaryTree<T> *in_level_BuildBT(T level[], T in[], int in1, int in2, int n){
     if(in1>in2)
         return NULL;
     int i, j;
@@ -60,6 +194,50 @@ BinaryTree<T> *level_in_BuildBT(T level[], T in[], int in1, int in2, int n){
     P->lchild = level_in_BuildBT(level, in, in1, j - 1, n);
     P->rchild = level_in_BuildBT(level, in, j + 1, in2, n);
     return P;
+}
+
+template<class T>
+int locate(T A[], T x, int n){
+    for (int i = 0; i < n; i++)
+     if(A[i]==x)
+         return i;
+    return -1;
+}
+
+//以层序为基准,用队列构造
+template<class T>
+BinaryTree<T> *level_in_BuildBT(T level[], T in[], int n){
+    queue<BinaryTree<T> *> Q;
+    BinaryTree<T> *root, *p;
+    bool *tag = new bool[n];
+    for (int i = 0; i < n; i++)
+        tag[i] = false;
+    int pos = 0, x;
+    root = new BinaryTree<T>(level[pos++]);
+    x = locate(in, root->data, n);
+    tag[x] = true;
+    Q.push(root);
+    while(!Q.empty()){
+        p = Q.front();
+        Q.pop();
+        x = locate(in, p->data, n);
+        if(x>0&&x<n&&!tag[x-1]){
+            p->lchild = new BinaryTree<T>(level[pos++]);
+            Q.push(p->lchild);
+            tag[locate(in, p->lchild->data, n)] = true;
+        }
+        else
+            p->lchild = NULL;
+        if(x>=0&&x<n-1&&!tag[x+1]){
+            p->rchild = new BinaryTree<T>(level[pos++]);
+            Q.push(p->rchild);
+            tag[locate(in, p->rchild->data, n)] = true;
+        }
+        else
+            p->rchild = NULL;
+    }
+    delete[] tag;
+    return root;
 }
 
 template<class T>
