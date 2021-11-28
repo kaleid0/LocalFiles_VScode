@@ -42,7 +42,8 @@ public:
     }
     friend BinaryTree<T> *pre_in_BuildBT(T pre[], T in[], int pre1, int pre2, int in1, int in2);
     friend BinaryTree<T> *post_in_BuildBT(T post[], T in[], int post1, int post2, int in1, int in2);
-    friend BinaryTree<T> *level_in_BuildBT(T level[], T in[], int in1, int in2, int n);
+    friend BinaryTree<T> *in_level_BuildBT(T level[], T in[], int in1, int in2, int n);//以中序为基准,递归
+    friend BinaryTree<T> *level_in_BuildBT(T level[], T in[], int n);//以层序为基准,用队列
     friend BinaryTree<T> *level_BuildBT(T A[], int n); //层序构造完全二叉树
     void visit(BinaryTree<T> *t){
         cout << t->data << ',';

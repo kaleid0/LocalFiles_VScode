@@ -1,35 +1,28 @@
-#include<iostream>
-#include<string.h>
-
+#include <iostream>
 using namespace std;
-
-class A{
+class Number
+{
+private:
+	int i;
 public:
-    char name[12];
-    char *p;
-    A(char *a,char *b){
-        strcpy(name, a);
-        p = b;
-    }
-    void set(char*a,char*b){
-        strcpy(name, a);
-        p = b;
-    }
+	Number( int x = 0 ) 
+	{
+		i = x;
+		cout << "Constructor Number:" << i << endl;
+	}
+	~Number( ) { cout << "Destructor Number:" << i << endl; }
+	Number operator+( const Number &x );
 };
-
-int main(void)
-{	
-	int a[4][4]={1,2,3,4,2,2,5,6,3,5,2,7,4,6,4,7};
-	int i,j,flag=0,sum=0;
-    for(j=0;j<4;j++) 
-    	for(i=0;i<=j;i++){
-    		if(a[j][i]==a[i][j])
-{	sum+=a[i][j];
-continue;
-				}
-   		 	flag=1;
-    	}
-    	if(flag)cout<<"No!"<<endl;
-    	else cout<<"All Right!"<<endl;
-		cout<<"sum="<<sum<<endl;
+Number Number::operator+( const Number &x )
+{
+	Number result;
+	cout << "Add Number" << endl;
+	result.i = i + x.i;
+	return result;
+}
+int main( )
+{
+	Number x(1), y(2);
+	y = x + y;
+	return 0;
 }

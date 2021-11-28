@@ -12,9 +12,12 @@ int main(){
     int level[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     int grade[] = {3, 3, 1, 2, 0, 0, 0, 0, 0, 0};
 
-    BinaryTree<int> *T1 = pre_in_BuildBT(pre1, in1, 0, 9, 0, 9);
-    ListBTree<int> T2(T1);
-    T2.print();
+    int level2[] = {1, 2, 3, 4, 5, 6, 7};
+    int in2[] = {4, 2, 5, 1, 6, 3, 7};
+
+    BinaryTree<int> *q = level_in_BuildBT(level2, in2, 7);
+    q->levelOrder();
+    q->InOrder();
     system("pause");
 }
 
