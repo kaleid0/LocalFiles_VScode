@@ -16,8 +16,9 @@ int main(){
     int in2[] = {4, 2, 5, 1, 6, 3, 7};
 
     BinaryTree<int> *q = level_in_BuildBT(level2, in2, 7);
-    q->levelOrder();
-    q->InOrder();
+    ListBTree<int> a(q);
+    cout << q;
+    cout << a;
     system("pause");
 }
 

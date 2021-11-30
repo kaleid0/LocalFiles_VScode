@@ -78,7 +78,8 @@ public:
     virtual void Insert(int x);
     void lastgen();//输出最后一层结点
     void printbalance(int &h, bool &balance); //输出平衡节点(非平衡二叉树的根节点依然可能是平衡节点)
-    friend ostream &operator<<(ostream &out, BinaryTree<T> tr);//以表的形式输出
+    template<class T1>
+    friend ostream &operator<<(ostream &out, BinaryTree<T1> *tr);
     bool isBST();//是否是二叉搜索树
 };
 
@@ -196,7 +197,10 @@ public:
         data = x;
         lchild = rchild = -1;
     }
-    friend ostream &operator<<(ostream &os, node p);
+    friend ostream &operator<<(ostream &os, node &p){
+        os << p.data << '\t' << p.lchild << '\t' << p.rchild;
+        return os;
+    }
     void print();
 };
 
@@ -208,7 +212,13 @@ private:
     int size;
 public:
     ListBTree(BinaryTree<T> *p);
-    friend ostream &operator<<(ostream &os, ListBTree &p);
+    template<class T1>
+    friend ostream &operator<<(ostream &os, ListBTree<T1> &p);
     void print();
     ~ListBTree() { delete[] list; }
 };
+
+
+
+
+

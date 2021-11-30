@@ -1,28 +1,24 @@
 #include <iostream>
 using namespace std;
-class Number
-{
-private:
-	int i;
+
+class ZeroExcep{
+	string message;
 public:
-	Number( int x = 0 ) 
-	{
-		i = x;
-		cout << "Constructor Number:" << i << endl;
-	}
-	~Number( ) { cout << "Destructor Number:" << i << endl; }
-	Number operator+( const Number &x );
+	ZeroExcep():message("±»0³ýÒì³£"){}
+	string what(){return message;}
 };
-Number Number::operator+( const Number &x )
-{
-	Number result;
-	cout << "Add Number" << endl;
-	result.i = i + x.i;
-	return result;
+double divide(double num1,double num2){
+	if(num2==0) throw ZeroExcep();
+	return num1/num2;
 }
-int main( )
-{
-	Number x(1), y(2);
-	y = x + y;
+int main(){
+	try{
+		cout<<"5.0/2.0="<<divide(5.0,2.0)<<endl;
+		cout<<"7.0/0.0="<<divide(7.0,0.0)<<endl;
+		cout<<"9.0/2.0="<<divide(9.0,2.0)<<endl;
+	}
+	catch(ZeroExcep ze){
+	cout<<ze.what()<<endl;
+	}
 	return 0;
 }

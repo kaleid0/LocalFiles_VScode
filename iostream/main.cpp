@@ -1,7 +1,149 @@
-#include<fstream>
 #include<iostream>
+#include<fstream>
+#include<iomanip>
+#include<vector>
 
 using namespace std;
+
+//Ìí¼ÓÐÐºÅ
+void addlineNo(char *filename);
+//»ñÈ¡ÎÄ¼þ´óÐ¡
+void getsize(char *filename);
+//¸ß¾«¶È¼Ó·¨
+bool add(char A[], char B[], int lengthA, int lengthB);
+void add(vector<int> &A, vector<int> &B);
+void add(char *filename);
+//½øÖÆ×ª»»
+void dec_bin(int x, char *c, int &n);
+void dec_oct(int x, char *c, int &n);
+void dec_hex(int x, char *c, int &n);
+void converse();
+
+int main() {
+    addlineNo("data2.dat");
+    getsize("ÐÐºÅ.txt");
+    add("¸ß¾«¶È¼Ó·¨.txt");
+    converse();
+}
+
+
+
+
+
+
+
+
+
+void addlineNo(char *filename){
+    ifstream infile(filename);
+    ofstream outfile("ÐÐºÅ.txt", ios::trunc);//trunc´ò¿ªÊ±Çå¿Õ
+    if(!outfile){
+        cout << "ÎÄ¼þÎÞ·¨´ò¿ª" << endl;
+        return;
+    }
+    char c[100];
+    int i = 0;
+    while(infile.getline(c, 100)){
+        outfile << setiosflags(ios::left) << setw(4) << i++ << c << endl;
+    }
+}
+
+void getsize(char *filename){
+    ifstream infile(filename);
+    if(!infile){
+        cout << "ÎÄ¼þÎÞ·¨´ò¿ª" << endl;
+        return;
+    }
+    streampos begin = infile.tellg();//»ñÈ¡¶ÁÖ¸Õë
+    infile.seekg(0, ios::end);//¶¨Î»µ½Ä©Î²
+    streampos end = infile.tellg();
+    cout << begin << ' ' << end << endl;
+    cout << "ÎÄ¼þ´óÐ¡Îª:" << end - begin << "×Ö½Ú" << endl;
+}
+
+bool add(char A[],char B[],int lengthA,int lengthB){
+    int d = lengthA - lengthB;
+    bool r = false;
+    int i = lengthA - 1;
+    for (; i >= d; i--) {
+        int a = r ? A[i] + B[i-d] + 1 - '0' * 2 : A[i] + B[i-d] - '0' * 2;
+        if (a > 9) {
+            a %= 10;
+            r = true;
+        }
+        else
+            r = false;
+        A[i] = a + '0';
+    }
+    while(r&&i>=0){
+        int a = A[i] + 1;
+        if(a>9)
+            A[i] = '0';
+        else{
+            A[i] = a + '0';
+            r = false;
+        }
+        i--;
+    }
+    return r;
+}
+
+void add(vector<int> &A, vector<int> &B){
+    int m = A.size() - 1;
+    int n = B.size() - 1;
+    bool r = false;
+    while(n>=0){
+        int temp = r ? A[m] + B[n] + 1 : A[m] + B[n];
+        r = temp > 9 ? true : false;
+        A[m] = temp % 10;
+        m--;
+        n--;
+    }
+    while(r&&m>=0){
+        int temp = r ? A[m] + 1 : A[m];
+        r = temp > 9 ? true : false;
+        A[m] = temp % 10;
+        m--;
+    }
+    if(r){
+        m = A.size() - 1;
+        A.push_back(A[m]);
+        for (int i = m; i > 0; i--)
+            A[i] = A[i - 1];
+        A[0] = 1;
+    }
+}
+
+
+void add(char *filename){
+    fstream outfile;
+    outfile.open(filename, ios::in | ios::out);
+    if(!outfile){
+        cout << "ÎÞ·¨´ò¿ªÎÄ¼þ" << endl;
+        return;
+    }
+    vector<int> A, B;
+    char c;
+    while ((c = outfile.get() )&& c != '\n')
+        A.push_back(c - '0');
+    while ((c = outfile.get() )&& c != EOF&&c!='\n')
+        B.push_back(c - '0');
+    outfile.close();
+    fstream infile;
+    infile.open(filename, ios::app);
+    infile.seekp(0, ios::end);
+    infile << endl;
+    if(A.size()>B.size()){
+        add(A, B);
+        for(auto i:A)
+            infile << i;
+    }
+    else{
+        add(B, A);
+        for(auto i:B)
+            infile << i;
+    }
+}
 
 void dec_bin(int x,char *c,int &n){
     int i = 0;
@@ -36,11 +178,11 @@ void dec_hex(int x,char *c,int &n){
 
 
 void converse(){
-    cout << "è¾“å…¥ä¸€ä¸ªæ•´æ•°:";
+    cout << "ÊäÈëÒ»¸öÕûÊý:";
     ofstream file;
     int x;
     cin >> x;
-    file.open("text2.txt", ios::trunc);
+    file.open("½øÖÆ×ª»».txt", ios::trunc);
     file << "dec:" << x << endl;
     char c[20];
     int n = 0;
@@ -61,10 +203,3 @@ void converse(){
     file << endl;
     file.close();
 }
-
-int main(){
-    converse();
-}
-
-
-

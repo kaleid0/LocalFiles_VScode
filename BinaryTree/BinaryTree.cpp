@@ -999,20 +999,21 @@ void BinaryTree<T>::printbalance(int &h, bool &balance){
 }
 
 template<class T>
-ostream &operator<<(ostream &out, BinaryTree<T> *tr){
-    if(tr==NULL)
+ostream &operator<<(ostream &out, BinaryTree<T> *tr){//以表的形式输出
+        if(tr==NULL)
         return out;
-    out << tr->data;
-    if(tr->rchild!=NULL||tr->lchild!=NULL)
-        out << '(';
-    out << tr->lchild;
-    if(tr->rchild!=NULL||tr->lchild!=NULL)
-        out << ',';
-    out << tr->rchild;
-    if(tr->rchild!=NULL||tr->lchild!=NULL)
-        out << ')';
-    return out;
-}
+        out << tr->data;
+        if(tr->rchild!=NULL||tr->lchild!=NULL)
+            out << '(';
+        out << tr->lchild;
+        if(tr->rchild!=NULL||tr->lchild!=NULL)
+            out << ',';
+        out << tr->rchild;
+        if(tr->rchild!=NULL||tr->lchild!=NULL)
+            out << ')';
+        out << endl;
+        return out;
+    }
 
 //二叉树转换为线索二叉树
 template<class T>
@@ -1224,14 +1225,6 @@ bool Tree<T>::isSame(Tree<T> *tr){
         return false;
     else
         return this->firstchild->isSame(tr->firstchild) && this->nextsibling->isSame(tr->nextsibling);
-}
-
-
-
-template<class T>
-ostream &operator<<(ostream &os, node<T> p){
-    os << p.data << '\t' << p.lchild << '\t' << p.rchild;
-    return os;
 }
 
 template<class T>
