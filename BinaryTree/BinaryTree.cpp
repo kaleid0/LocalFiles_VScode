@@ -1000,20 +1000,24 @@ void BinaryTree<T>::printbalance(int &h, bool &balance){
 
 template<class T>
 ostream &operator<<(ostream &out, BinaryTree<T> *tr){//以表的形式输出
-        if(tr==NULL)
-        return out;
-        out << tr->data;
-        if(tr->rchild!=NULL||tr->lchild!=NULL)
-            out << '(';
-        out << tr->lchild;
-        if(tr->rchild!=NULL||tr->lchild!=NULL)
-            out << ',';
-        out << tr->rchild;
-        if(tr->rchild!=NULL||tr->lchild!=NULL)
-            out << ')';
-        out << endl;
+    if(tr==NULL){
         return out;
     }
+    out << tr->data;
+    if(tr->rchild!=NULL||tr->lchild!=NULL)
+        out << '(';
+    out << tr->lchild;
+    if(tr->lchild==NULL&&tr->rchild!=NULL)
+        out << '^';
+    if(tr->rchild!=NULL||tr->lchild!=NULL)
+        out << ',';
+    out << tr->rchild;
+    if(tr->lchild!=NULL&&tr->rchild==NULL)
+        out << '^';
+    if(tr->rchild!=NULL||tr->lchild!=NULL)
+        out << ')';
+    return out;
+}
 
 //二叉树转换为线索二叉树
 template<class T>
@@ -1228,8 +1232,21 @@ bool Tree<T>::isSame(Tree<T> *tr){
 }
 
 template<class T>
-void node<T>::print(){
-    cout << data << '\t' << lchild << '\t' << rchild;
+ostream &operator<<(ostream &out, Tree<T> *tr){
+    if(tr==NULL){
+        return out;
+    }
+    out << tr->data;
+    if(tr->firstchild!=NULL){
+        out << '(';
+        out << tr->firstchild;
+        out << ')';
+    }
+    if(tr->nextsibling!=NULL){
+        out << ',';
+        out << tr->nextsibling;
+    }
+    return out;
 }
 
 //层序遍历构造静态链表
@@ -1242,7 +1259,7 @@ ListBTree<T>::ListBTree(BinaryTree<T> *p){
     }
     queue<BinaryTree<T> *> Q;
     BinaryTree<T> *temp;
-    list = new node<T>[20];
+    list = new BTreeNode<T>[20];
     size = 1;
     list[0].data = (p->data);
     Q.push(p);
@@ -1269,7 +1286,7 @@ ListBTree<T>::ListBTree(BinaryTree<T> *p){
 template<class T>
 ostream &operator<<(ostream &os, ListBTree<T> &p){
     for (int i = 0; i < p.size; i++)
-        os << i << ':' << p.list[i] << endl;
+        os << i << ':' << '\t' << p.list[i] << endl;
     return os;
 }
 
@@ -1278,5 +1295,36 @@ void ListBTree<T>::print(){
     for (int i = 0; i < size; i++){
         list[i].print();
         cout << endl;
+    }
+}
+
+template<class T>
+ListTree<T>::ListTree(Tree<T> *p){
+    if(p==NULL){
+        list = NULL;
+        size = 0;
+        return;
+    }
+    queue<Tree<T> *> Q;
+    Tree<T> *temp = p, *son = NULL;
+    list = new TreeNode<T>[20];
+    list[0].data = temp->data;
+    list[0].parent = -1;
+    size = 1;
+    Q.push(temp);
+    int t = 0, last = 1;
+    while(!Q.empty()){
+        temp = Q.front();
+        Q.pop();
+        son = temp->firstchild;
+        while(son!=NULL){
+            list[last].data = son->data;
+            list[last].parent = t;
+            last++;
+            size++;
+            Q.push(son);
+            son = son->nextsibling;
+        }
+        t++;
     }
 }

@@ -15,10 +15,11 @@ int main(){
     int level2[] = {1, 2, 3, 4, 5, 6, 7};
     int in2[] = {4, 2, 5, 1, 6, 3, 7};
 
-    BinaryTree<int> *q = level_in_BuildBT(level2, in2, 7);
-    ListBTree<int> a(q);
-    cout << q;
-    cout << a;
+    BinaryTree<int> *T1 = level_BuildBT(level, 10);
+    cout << T1 << endl;
+    Tree<int> *T = level_grade_build2(level, grade, 10);
+    ListTree<int> T3(T);
+    cout << T3;
     system("pause");
 }
 

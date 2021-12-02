@@ -29,11 +29,6 @@ int main() {
 
 
 
-
-
-
-
-
 void addlineNo(char *filename){
     ifstream infile(filename);
     ofstream outfile("行号.txt", ios::trunc);//trunc打开时清空
